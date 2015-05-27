@@ -27,11 +27,14 @@ module.exports = function (options) {
     options.language = (options.language)? util.format('--lang=%s', options.language) : '';
 
     aspell.args.push(options.language);
+    aspell.args.push("-H")
 
     function check (file, enc, callback) {
         /*jshint validthis:true */
         var self = this;
         var contents = file.contents.toString('utf-8');
+
+	var misspelling = false;
 
         // Remove all line breaks and add a circumflex in order to disable 'pipe mode'.
         // see: http://aspell.net/man-html/Through-A-Pipe.html
@@ -43,12 +46,15 @@ module.exports = function (options) {
             })
             .on('result', function onResult (result) {
                 if ('misspelling' === result.type) {
+		    misspelling = true;
                     contents = contents.replace(result.word, util.format(options.replacement, result.word, result.alternatives.join(', ')));
                 }
             })
             .on('end', function () {
-                file.contents = new Buffer(contents);
-                self.push(file);
+		if (misspelling) {
+                    file.contents = new Buffer(contents);
+                    self.push(file);
+		}
 
                 return callback();
             });
