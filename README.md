@@ -2,6 +2,16 @@
 
 > A gulp plugin for spell-checking with [GNU Aspell](http://aspell.net/).
 
+## Note:
+
+HTML spell checking with private dictionary specified at project root in file .aspell.en.pws.
+File is not created by default, if user wants custom rules he should create one.
+
+### Dictionary specification(.aspell.en.pws):
+personal_ws-1.1 en
+Maxeler
+AppGallery
+
 ## Usage
 
 First of all you have to make sure that you have [GNU Aspell](http://aspell.net/) installed:
@@ -18,12 +28,21 @@ npm install --save-dev gulp-spellcheck
 Then, add it to your `gulpfile.js`:
 
 ```javascript
+var frep = require('gulp-frep');
 var spellcheck = require('gulp-spellcheck');
 
 gulp.task('spellcheck', function () {
-    gulp.src('./dododo/**/*.md')
+
+    var patterns = [
+    {
+        pattern: /({{([^}}]+)}})/ig,
+        replacement: ''
+    }];
+
+
+    var a = gulp.src('./src/**/*.html')
+        .pipe(frep(patterns))
         .pipe(spellcheck())
-        .pipe(gulp.dest('./spellchecked/'));
 });
 ```
 
@@ -47,9 +66,9 @@ The string that will replace the wrong word whereas the first placeholder is the
 
 ## Changelog
 
-### Version 0.2.0 (Future)
+### Version 0.2.0 (20150528)
 
-- Ignore list
+- Ignore list: private dictionary in project root location (.aspell.en.pws)
 
 ### Version 0.1.2 (20140331)
 

@@ -22,7 +22,7 @@ var PLUGIN_NAME = 'gulp-spellcheck';
 module.exports = function (options) {
 
     options = options || {};
-    options.replacement = options.replacement || 'position %d: %s (suggestions: %s)';
+    options.replacement = options.replacement || '%s (suggestions: %s)';
 
     options.language = (options.language) ? util.format('--lang=%s', options.language) : '';
 
@@ -52,7 +52,7 @@ module.exports = function (options) {
 			filename = true;
 			gutil.log("\n" + file.path);
 		    }
-		    gutil.log(util.format(options.replacement, result.position, result.word, result.alternatives.join(', ')));
+		    gutil.log(util.format(options.replacement, result.word, result.alternatives.join(', ')));
                 }
             })
             .on('end', function () {
