@@ -24,21 +24,19 @@ module.exports = function (options) {
     options = options || {};
     options.replacement = options.replacement || 'position %d: %s (suggestions: %s)';
 
-    options.language = (options.language)? util.format('--lang=%s', options.language) : '';
+    options.language = (options.language) ? util.format('--lang=%s', options.language) : '';
 
     aspell.args.push(options.language);
     aspell.args.push("-H");
+    aspell.args.push("--home-dir=./");
+    aspell.args.push(".aspell.en.pws");
 
     function check (file, enc, callback) {
-        /*jshint validthis:true */
+        /* jshint validthis:true */
         var self = this;
         var contents = file.contents.toString('utf-8');
 
-	var line = 0;
-
-	var misspelling = false;
-
-	var output = "";
+	var filename = false;
 
         // Remove all line breaks and add a circumflex in order to disable 'pipe mode'.
         // see: http://aspell.net/man-html/Through-A-Pipe.html
@@ -49,21 +47,15 @@ module.exports = function (options) {
                 return self.emit('error', new gutil.PluginError(PLUGIN_NAME, err));
             })
             .on('result', function onResult (result) {
-		if ("line-break" === result.type) {
-		    line++;
-		} 
                 if ('misspelling' === result.type) {
-		    misspelling = true;
-		    //contents = contents.replace(RegExp(result.word, "ig"), util.format(options.replacement, result.word, result.alternatives.join(', '), line));
-		    output.concat(util.format(line, options.replacement, result.word, result.alternatives.join(', ')));
+		    if (!filename) {
+			filename = true;
+			gutil.log("\n" + file.path);
+		    }
+		    gutil.log(util.format(options.replacement, result.position, result.word, result.alternatives.join(', ')));
                 }
             })
             .on('end', function () {
-		if (misspelling) {
-                    file.contents = new Buffer(output);
-                    self.push(file);
-		}
-
                 return callback();
             });
     }
