@@ -8,9 +8,11 @@ HTML spell checking with private dictionary specified at project root in file .a
 File is not created by default, if user wants custom rules he should create one.
 
 ### Dictionary specification(.aspell.en.pws):
+```javascript
 personal_ws-1.1 en
 Maxeler
 AppGallery
+```
 
 ## Usage
 
