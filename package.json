@@ -12,7 +12,7 @@
     "test": "gulp"
   },
   "repository": {
-    "url": "git@github.com:dveljovic/gulp-spellcheck.git"
+    "url": "maxeler/gulp-spellcheck.git"
   },
   "keywords": [
     "gulpplugin",

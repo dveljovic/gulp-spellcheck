@@ -19,10 +19,10 @@ AppGallery
 First of all you have to make sure that you have [GNU Aspell](http://aspell.net/) installed:
     
     $ # Debian-based
-    $ sudo apt-get install aspell
+    $ sudo apt-get install aspell-en
 
     $ # CentOS
-    $ sudo yum install aspell
+    $ sudo yum install aspell-en
 
 If `aspell` is available install `gulp-spellcheck` as a development dependency in your project.
 
@@ -47,7 +47,7 @@ gulp.task('spellcheck', function () {
 
     var a = gulp.src('./src/**/*.html')
         .pipe(frep(patterns))
-        .pipe(spellcheck())
+        .pipe(spellcheck());
 });
 ```
 
