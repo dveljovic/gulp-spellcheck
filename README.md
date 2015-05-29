@@ -21,6 +21,9 @@ First of all you have to make sure that you have [GNU Aspell](http://aspell.net/
     $ # Debian-based
     $ sudo apt-get install aspell
 
+    $ # CentOS
+    $ sudo yum install aspell
+
 If `aspell` is available install `gulp-spellcheck` as a development dependency in your project.
 
 ```shell
