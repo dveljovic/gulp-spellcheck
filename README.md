@@ -27,7 +27,7 @@ First of all you have to make sure that you have [GNU Aspell](http://aspell.net/
 If `aspell` is available install `gulp-spellcheck` as a development dependency in your project.
 
 ```shell
-npm install --save-dev gulp-spellcheck
+npm install --save-dev maxeler/gulp-spellcheck
 ```
 
 Then, add it to your `gulpfile.js`:

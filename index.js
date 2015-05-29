@@ -7,6 +7,7 @@
  */
 
 /**
+ * @author Dragan Veljovic <dveljovic@maxeler.com>
  * @author André König <andre.koenig@posteo.de>
  *
  */
